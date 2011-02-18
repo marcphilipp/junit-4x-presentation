@@ -1,0 +1,5 @@
+<?xml version="1.0">
+<matchers>
+   <factory class="org.hamcrest.core.Is"/>
+   <factory class="de.andrena.junit.hamcrest.IsEmptyCollection"/>
+</matchers>
