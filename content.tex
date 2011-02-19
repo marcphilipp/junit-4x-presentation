@@ -142,38 +142,38 @@ Expected: not a collection containing <2>
 \begin{frame}{Many Matchers -- Many Classes}
 	\begin{block}{Problem}
 		\begin{itemize}
-			\item Vielzahl von Klassen mit zu importierenden statischen Methoden
-			\item Manuelle Konfiguration der IDE notwendig
-			\item \dots bei allen Entwicklern
+			\item Lots of matcher classes with static methods we would like to import
+			\item Requires manual setup of preferences in IDE
+			\item \dots for all developers!
 		\end{itemize}
 	\end{block}
-	\begin{block}{Lösung}
-		Generierung einer eigenen Matcher-Bibliothek
+	\begin{block}{Solution}
+		Generate your own matcher library
 	\end{block}
 \end{frame}
 
-\begin{frame}[fragile]{Generierung einer Matcher-Bibliothek}
+\begin{frame}[fragile]{Generating a Custom Matcher Library}
 	\begin{enumerate}
-		\item Konfiguration in XML
+		\item Configuration in XML
 			\lstinputlisting[language=XML,firstline=2]{java/EffectiveJUnit/src/de/andrena/junit/hamcrest/matchers.xml}
-		\item Aufruf von \texttt{org.hamcrest.generator.config.XmlConfigurator}
-		\item Alle mit \texttt{@Factory} annotierten Methoden werden in einer generierten Klasse zusammengefasst:
+		\item Run \texttt{org.hamcrest.generator.config.XmlConfigurator}
+		\item Combines all \texttt{@Factory} methods into a single generated class:
 			\javainputlisting[firstline=7]{hamcrest}{Matchers}
 	\end{enumerate}
 \end{frame}
 
-\begin{frame}[fragile]{Fazit: Matchers}
+\begin{frame}[fragile]{Summary: Matchers}
 	\begin{itemize}
-		\item Assertions lassen sich oft eleganter formulieren
-		\item Manchmal sind die alten Assertion-Methoden klarer
+		\item Assertions can often be expressed more elegantly
+		\item Old assertion methods are still clearer sometimes
 	\end{itemize}
 	\begin{block}{Problem}
-		Javas Typsystem macht einem oft einen Strich durch die Rechnung
+		Java type system often gets in one's way
 		\begin{itemize}
-			\item Boxing notwendig bei primitiven Typen \begin{lstlisting}
+			\item Requires boxing for primitive types \begin{lstlisting}
 assertThat(1 + 1, is(2))
 \end{lstlisting}
-			\item Mangelnde Typinferenz \begin{lstlisting}
+			\item Insufficient type inference \begin{lstlisting}
 assertThat(new TreeSet<String>(), Matchers.<String>empty());
 \end{lstlisting}
 		\end{itemize}
