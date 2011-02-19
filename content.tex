@@ -1,4 +1,4 @@
-\begin{frame}{Über JUnit}
+\begin{frame}{About JUnit}
 	\begin{columns}[c]
 		\begin{column}{5cm}
 			\def\firstcircle{(0:1cm) circle (15mm)}
@@ -23,22 +23,22 @@
 				JUnit is the intersection of all possible useful Java test frameworks, not their union.
 			\end{block}
 			\vskip+1em
-			Nicht nur für Unit Tests!
+			Not only for Unit Tests!
 		\end{column}
 	\end{columns}
 \end{frame}
 
-\begin{frame}{Warum ein Vortrag über JUnit?}
+\begin{frame}{A presentation about JUnit?}
 	\begin{itemize}[<+->]
-		\item Jeder kennt JUnit.
-		\item Wirklich?
-		\item Jeder meint, JUnit zu kennen.
-		\item Ich meinte es auch.
-		\item Seit Version 4.0 hat sich einiges getan!
+		\item Every Java developer knows JUnit.
+		\item Really?
+		\item Everyone thinks he knows JUnit.
+		\item I thought so, too.
+		\item However, a lot has happended since release 4.0!
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Neue Features seit Version 4.0}
+\begin{frame}{New Features since 4.0}
 \begin{center}
 \begin{tikzpicture}[scale=0.9,transform shape]
   \path[every concept/.append style={font=\Large},level 1 concept/.append style={sibling angle=90,level distance=50mm},mindmap,concept color=gray,text=white]
@@ -59,50 +59,50 @@
 \part{Matchers}
 }
 
-\begin{frame}[fragile]{Neue Assertion: \texttt{assertThat(\dots)}}
+\begin{frame}[fragile]{New Assertion: \texttt{assertThat(\dots)}}
     \begin{itemize}
-        \item Neue \texttt{Assert}-Methoden:
+        \item New \texttt{Assert} methods:
     \begin{lstlisting}
 <T> void assertThat(T actual, Matcher<T> matcher)
 <T> void assertThat(String reason, T actual, Matcher<T> matcher)
 \end{lstlisting}
-        \item Parameter:
+        \item Parameters:
         \begin{description}[matcher]
-            \item[reason]  Zusätzliche Beschreibung für den Fehlerfall (optional)
-            \item[actual]  Tatsächlicher Wert
-            \item[matcher] Hamcrest-Matcher überprüft tatsächlichen Wert
+            \item[reason]  description displayed when assertion fails (optional)
+            \item[actual]  actual value
+            \item[matcher] Hamcrest matcher that checks the actual value
         \end{description}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Bessere Lesbarkeit}
+\begin{frame}[fragile]{Increased Readability}
     \only<1>{\javainputlisting[firstline=6]{hamcrest}{BetterReadability}}
     \only<2|handout:0>{\javainputlisting[firstline=6,emph={withoutMatchers,assertEquals}]{hamcrest}{BetterReadability}}
     \only<3|handout:0>{\javainputlisting[firstline=6,emph={withMatchers,assertThat}]{hamcrest}{BetterReadability}}
     \only<4|handout:0>{\javainputlisting[firstline=6,emph={is}]{hamcrest}{BetterReadability}}
     \begin{itemize}
-        \item Reihenfolge stimmt
-        \item Häufig besser lesbar als herkömmliche Assertions
+        \item No more guessing about order of arguments
+        \item Often more readable than traditional assertions
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Matcher kombinieren}
-        Matcher lassen sich einfach kombinieren:
-	    \javainputlisting[firstline=20,lastline=21,tabsize=1]{hamcrest}{WithMatchers}
+\begin{frame}[fragile]{Combining Matchers}
+	Matchers are easily combined:
+	\javainputlisting[firstline=20,lastline=21,tabsize=1]{hamcrest}{WithMatchers}
 \end{frame}
 
-\begin{frame}[fragile]{Aussagekräftige Fehlermeldungen}
-    \begin{block}{Herkömmliche Zusicherung ohne Beschreibung}
+\begin{frame}[fragile]{Expressive Failure Messages}
+    \begin{block}{Traditional assertions without description}
 \javainputlisting[firstline=10,lastline=10,tabsize=1]{hamcrest}{WithoutMatchers}
-Ergebnis:
+Result:
 \begin{lstlisting}
 AssertionError: at de.andrena.junit...
 \end{lstlisting}
     \end{block}	
 \pause
-    \begin{block}{Neue Zusicherung mit Matcher}
+    \begin{block}{New assertion with matcher}
 \javainputlisting[firstline=16,lastline=16,tabsize=1]{hamcrest}{WithMatchers}
-Ergebnis:
+Result:
 \begin{lstlisting}
 AssertionError:
 Expected: not a collection containing <2>
@@ -111,35 +111,35 @@ Expected: not a collection containing <2>
     \end{block}
 \end{frame}
 
-\begin{frame}{Vordefinierte Matcher}
+\begin{frame}{Predefined Matchers}
     \begin{itemize}
-        \item Vielzahl vordefinierter Matcher:
+        \item Numerous predefined matchers:
         \begin{description}[Collections]
             \item[Core] \texttt{is}, \texttt{not}, \texttt{allOf}, \texttt{anyOf}, \texttt{nullValue}, \dots
             \item[Strings] \texttt{containsString}, \texttt{startsWith}, \texttt{endsWith}, \dots
             \item[Collections] \texttt{hasItem}, \texttt{hasItems}, \texttt{isIn}, \texttt{empty}, \texttt{hasSize}, \dots
         \end{description}
-        \item Bei JUnit ist nur ein kleiner Teil mit dabei:
+        \item JUnit includes only a small fraction:
         \begin{itemize}
             \item org.hamcrest.CoreMatchers
             \item org.junit.matchers.JUnitMatchers
         \end{itemize}
-        \item Hamcrest bietet weitere Matcher (\texttt{hamcrest-all.jar}).
-        \item<alert@2> Darüber hinaus lassen sich eigene Matcher definieren.
+        \item Hamcrest offers additional matchers (\texttt{hamcrest-all.jar}).
+        \item<alert@2> In addition, you can write your own matchers.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Ein eigener Matcher}{Implementierung}
+\begin{frame}{A Custom Matcher}{Implementation}
 	\only<1>{\javainputlisting[firstline=9]{hamcrest}{IsEmptyCollection}}
 	\only<2|handout:0>{\javainputlisting[firstline=9,emph={@Override,TypeSafeMatcher,matchesSafely,describeTo}]{hamcrest}{IsEmptyCollection}}
 	\only<3|handout:0>{\javainputlisting[firstline=9,emph={@Factory, empty}]{hamcrest}{IsEmptyCollection}}
 \end{frame}
 
-\begin{frame}{Ein eigener Matcher}{Benutzung}
+\begin{frame}{A Custom Matcher}{Usage}
 	\javainputlisting[firstline=9]{hamcrest}{CollectionMatchersTest}
 \end{frame}
 
-\begin{frame}{Viele Matcher -- Viele Klassen}
+\begin{frame}{Many Matchers -- Many Classes}
 	\begin{block}{Problem}
 		\begin{itemize}
 			\item Vielzahl von Klassen mit zu importierenden statischen Methoden
