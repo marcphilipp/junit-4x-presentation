@@ -1,18 +1,12 @@
 \begin{frame}{About JUnit}
 	\begin{columns}[c]
-		\begin{column}{5cm}
-			\def\firstcircle{(0:1cm) circle (15mm)}
-			\def\secondcircle{(-120:1cm) circle (15mm)}
-			\def\thirdcircle{(120:1cm) circle (15mm)}
+		\begin{column}{5cm}\centering
 			\begin{tikzpicture}
-			    \begin{scope}[fill opacity=0.5]
-				\fill[red] \firstcircle;
-				\fill[green] \secondcircle;
-				\fill[blue] \thirdcircle;
-				\draw \firstcircle;
-				\draw \secondcircle;
-				\draw \thirdcircle;
-			    \end{scope}
+				\begin{scope}[fill opacity=.5]
+					\filldraw[fill=red]   (0:1cm) circle (15mm);
+					\filldraw[fill=green] (-120:1cm) circle (15mm);
+					\filldraw[fill=blue]  (120:1cm) circle (15mm);
+				\end{scope}
 			\end{tikzpicture}
 		\end{column}
 		\begin{column}{5cm}
@@ -277,79 +271,79 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 \part{Rules}
 }
 
-\begin{frame}<1-2>[label=ruledef]{Was ist eine Rule?}
-	Erweiterungsmechanismus für Ablauf der Testmethoden
-	\begin{block}{Beispiele:}
+\begin{frame}<1-2>[label=ruledef]{What is a Rule?}
+	Extension mechanism for execution of test methods
+	\begin{block}{Examples:}
 		\begin{itemize}
-			\item<alert@2> Ausführung eigenen Codes vor bzw. nach jeder Testmethode
-			\item<alert@3>  Behandlung fehlgeschlagener Tests
-			\item Überprüfung zusätzlicher Kriterien nach einem Tests
+			\item<alert@2> Execute code before/after every test method
+			\item<alert@3> Handle failed tests
+			\item Check additonal criteria after every test
 			\item \dots
 		\end{itemize}
 	\end{block}
 \end{frame}
 
-\begin{frame}{Beispiel: TemporaryFolder}{Ohne Benutzung einer Rule}
+\begin{frame}{Example: TemporaryFolder}{Without Rules}
 	\only<1>{\javainputlisting[firstline=9,lastline=27]{rules}{TemporaryFolderWithoutRule}}
 	\only<2|handout:0>{\javainputlisting[firstline=9,lastline=27,emph={@Before,@After,folder}]{rules}{TemporaryFolderWithoutRule}}
 \end{frame}
 
-\begin{frame}{Beispiel: TemporaryFolder}{Unter Verwendung einer Rule}
+\begin{frame}{Example: TemporaryFolder}{With Rules}
 	\only<1>{\javainputlisting[firstline=9]{rules}{TemporaryFolderWithRule}}
 	\only<2|handout:0>{\javainputlisting[firstline=9,emph={@Rule,folder}]{rules}{TemporaryFolderWithRule}}
 \end{frame}
 
 \againframe<3>{ruledef}
 
-\begin{frame}{Beispiel: ExpectedException}{Ohne Benutzung einer Rule}
+\begin{frame}{Example: ExpectedException}{Without Rules}
 	\only<1>{\javainputlisting[firstline=7]{rules}{ExpectedExceptionWithoutRule}}
 	\only<2|handout:0>{\javainputlisting[firstline=7,emph={expected}]{rules}{ExpectedExceptionWithoutRule}}
 \end{frame}
 
-\begin{frame}{Beispiel: ExpectedException}{Unter Verwendung einer Rule}
+\begin{frame}{Example: ExpectedException}{With Rules}
 	\only<1>{\javainputlisting[firstline=7]{rules}{ExpectedExceptionWithRule}}
 	\only<2|handout:0>{\javainputlisting[firstline=7,emph={@Rule,thrown}]{rules}{ExpectedExceptionWithRule}}
 \end{frame}
 
-\begin{frame}{Weitere vordefinierte Rules}
+\begin{frame}{Other Predefinded Rules}
 	\begin{block}{ErrorCollector}
-		Sammelt fehlgeschlagene Assertions innerhalb einer Testmethode und gibt am Ende eine Liste der Fehlschläge aus.
+		Collects failing assertions and causes the test to fail with an aggregated list of failures at the end.
 	\end{block}
 	\begin{block}{TestName}
-		Merkt sich Namen der aktuell ausgeführten Testmethode und stellt ihn auf Anfrage zur Verfügung.
+		Provides access to the name of the currently executing test method.
 	\end{block}
 	\begin{block}{Timeout}
-		Wendet gleichen Timeout auf alle Testmethoden einer Klasse an.
+		Applies the same timeout to all test methods in the test class.
 	\end{block}
 \end{frame}
 
-\begin{frame}{Schreib deine eigenen Regeln!}
+\begin{frame}{Write Your Own Rules!}
 	\includegraphics<1|handout:0>[width=\textwidth]{img/rules/basisKlassen.jpg}
 	\includegraphics<2>[width=\textwidth]{img/rules/basisKlassenMitTemporaryFolder.jpg}
 \end{frame}
 
-\begin{frame}{Eine eigene Regel}{Implementierung}
+\begin{frame}{Custom Rule}{Implementation}
 	\only<1>{\javainputlisting[firstline=5]{rules}{SystemProperty}}
 	\only<2|handout:0>{\javainputlisting[firstline=5,emph={@Override,before,after,ExternalResource}]{rules}{SystemProperty}}
 \end{frame}
 
-\begin{frame}{Eine eigene Regel}{Benutzung}
+\begin{frame}{Custom Rule}{Usage}
 	\only<1>{\javainputlisting[firstline=8]{rules}{SomeTestUsingSystemProperty}}
 	\only<2|handout:0>{\javainputlisting[firstline=8,emph={@Rule,systemProperty}]{rules}{SomeTestUsingSystemProperty}}
 \end{frame}
 
-\begin{frame}{Vorteile von Regeln}
-	\begin{block}{Wiederverwendbarkeit}
-		Ermöglichen häufig benötigten Code auszulagern.
+\begin{frame}{Advantages of Rules}
+	\begin{block}{Reusable}
+		Allow to encapsulate frequently used code.
 	\end{block}
-	\begin{block}{Kombinierbarkeit}
-		Beliebig viele Regeln in einem Test verwendbar
+	\begin{block}{Composable}
+		You can use any number of rules in one test class.
 	\end{block}
-	\begin{block}{Delegation statt Vererbung}
-		Helfen Testklassenhierarchien zu vermeiden!
+	\begin{block}{Delegation over inheritance}
+		Help to avoid test class hierarchies.
 	\end{block}
-	\begin{block}{Erweiterbarkeit}
-		Eigene Regeln schreiben ist einfach.
+	\begin{block}{Extendable}
+		Writing your own rules is easy.
 	\end{block}
 \end{frame}
 
@@ -359,24 +353,24 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 \part{Categories}
 }
 
-\begin{frame}{Tests in Kategorien einteilen}
+\begin{frame}{Dividing Tests into Categories}
 	\begin{itemize}
-		\item Kategorie ist Klasse oder Interface:
+		\item Category is class or interface:
 			\javainputlisting[firstline=3]{categories}{Slow}
-		\item Einzelner Test:
+		\item Only for one test:
 			\javainputlisting[firstline=13,lastline=15,tabsize=1]{categories}{A}
-		\item Alle Tests einer Klasse:
+		\item All tests in a test class:
 			\javainputlisting[firstline=6]{categories}{B}
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Tests in bestimmten Kategorien ausführen}
+\begin{frame}{Executing All Tests in Certain Categories}
 	\begin{itemize}
-		\item Herkömmliche Test-Suite:
+		\item Conventional test suite:
 			\javainputlisting[firstline=7]{categories}{AllTests}
-		\item Alle Tests in der Kategorie \texttt{Slow}:
+		\item All tests in category \texttt{Slow}:
 			\javainputlisting[firstline=7]{categories}{AllSlowTests}
-		\item Alle anderen Tests:
+		\item All other tests:
 			\javainputlisting[firstline=7]{categories}{AllFastTests}
 	\end{itemize}
 \end{frame}
@@ -384,37 +378,39 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 {
 \date{Quint Buchholz, Mann auf einer Leiter}
 \usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{img/summary/part.jpg}}
-\part{Ausblick}
+\part{What's next?}
 }
 
-\begin{frame}{Was jetzt?}
+\begin{frame}{What's next?}
 	\begin{itemize}
-		\item Aktualisierung auf neue Version ist einfach
-		\item Alte Tests funktionieren weiterhin
-		\item Neue Tests profitieren von neuen Features
-		\item Alte Tests können nach und nach vereinfacht werden
-		\item<alert@2> Ausprobieren!
+		\item Updating to more recent JUnit version is easy
+		\item Old tests will still run
+		\item New tests will benefit from new features
+		\item Old tests can be simplified little by little
+		\item<alert@2> Try it out!
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Ausprobieren!}
+\begin{frame}{Try it out!}
 
 	{%\Large
 	\url{http://www.junit.org/}\par}\vskip+1em
 
 	\begin{beamercolorbox}[sep=1em]{blockbackground} 
-		Grau is alle Theorie – entscheidend is auf'm Platz\\
-		\raggedleft -- Adi Preissler\hskip+1em\hbox{}
-	\end{beamercolorbox}\vskip+1.5em
+		In theory, there is no difference between theory and practice.\\
+		But, in practice, there is.
+
+		\raggedleft\scriptsize Jan L. A. van de Snepscheut/Yogi Berra\hskip+1em\hbox{}
+	\end{beamercolorbox}\vskip+1em
 	
 
 	{\centering\Huge
-	Vielen Dank!\par}\vskip+3em
+	Thank you!\par}\vskip+2em
 
-        \begin{description}[Twitter]
+	\begin{description}[Twitter]
 		\item[Mail]    \href{mailto:marc@andrena.de}{\texttt{marc@andrena.de}}
-		\item[Twitter] \href{http://twitter.com/marcphilipp}{\texttt{marcphilipp}}
+		\item[Twitter] \href{http://twitter.com/marcphilipp}{\texttt{@marcphilipp}}
 		\item[Blog]    \url{http://marcphilipp.tumblr.com/}
-        \end{description}
+	\end{description}
 \end{frame}
 
