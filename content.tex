@@ -186,21 +186,21 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 \part{Theories}
 }
 
-\begin{frame}[fragile]{Parametrisierte Tests}
+\begin{frame}[fragile]{Parameterized Tests}
 	\begin{itemize}
-		\item Seit JUnit 4.0 gibt es den \texttt{Parameterized} Test Runner.
-		\item Ermöglicht Parametrisierung von Testklassen über Konstruktor
-		\item Argumente werden in einer statischen Methode angegeben:
+		\item \texttt{Parameterized} test runner included since JUnit 4.0
+		\item Allows to supply parameters to test class constructors
+		\item Arguments are defined in a public, static method
 			\begin{itemize}
-				\item \texttt{@Parameters}-Annotation
-				\item Rückgabetyp: \verb|List<Object[]>|
+				\item \texttt{@Parameters} annotation
+				\item Return type: \verb|List<Object[]>|
 			\end{itemize}
-		\item Für jedes Paar von Testmethode und Argument wird eine Instanz der Testklasse angelegt und die Testmethode ausgeführt.
-		\item Nützlich, wenn Berechnung mit vielen Eingabeparametern getestet werden soll.
+		\item The runner creates an instance of the test class for each pair of test method and argument definition and executes the test. 
+		\item Useful when testing a calculation with a large number of input values.
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Parametrisierte Tests}{Beispiel: Fibonacci-Zahlen}
+\begin{frame}{Parameterized Tests}{Example: Fibonacci Numbers}
 	\only<1>{\javainputlisting[firstline=11]{fibonacci}{FibonacciParameterizedTest}}
 	\only<2|handout:0>{\javainputlisting[firstline=11,emph={input, expected}]{fibonacci}{FibonacciParameterizedTest}}
 	\only<3|handout:0>{\javainputlisting[firstline=11,emph={@Parameters,data}]{fibonacci}{FibonacciParameterizedTest}}
@@ -208,19 +208,19 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 
 \begin{frame}{Theories}
 	\begin{itemize}
-		\item Neu seit Version 4.4
-		\item Parametrisierte Testmethode mit Vorbedingungen (Assumptions)
+		\item Introduced in release 4.4
+		\item Parameterized test method with preconditions (assumptions)
 			\begin{itemize}
 				\item \texttt{assumeThat()}
 				\item \texttt{assumeTrue()}
 				\item \texttt{assumeNotNull()}
 			\end{itemize}
-		\item \texttt{@Theory} statt \texttt{@Test}
-		\item Input für Testmethoden über \texttt{@DataPoint}(\texttt{s})-Annotation
+		\item \texttt{@Theory} instead of \texttt{@Test}
+		\item Input for test methods via \texttt{@DataPoint}(\texttt{s}) annotation
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Theories}{Beispiel: Fibonacci-Zahlen}
+\begin{frame}{Theories}{Example: Fibonacci Numbers}
 	\only<1>{\javainputlisting[firstline=9]{fibonacci}{FibonacciTheories}}
 	\only<2|handout:0>{\javainputlisting[firstline=9,emph={@Theory}]{fibonacci}{FibonacciTheories}}
 	\only<3|handout:0>{\javainputlisting[firstline=9,emph={n}]{fibonacci}{FibonacciTheories}}
@@ -230,7 +230,7 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 	\only<7|handout:0>{\javainputlisting[firstline=9,emph={recurrence}]{fibonacci}{FibonacciTheories}}
 \end{frame}
 
-\begin{frame}{Theories}{Beispiel: Verschiedene \texttt{@DataPoints}}
+\begin{frame}{Theories}{Example: \texttt{@DataPoints} of different types}
 	\only<1>{\javainputlisting[firstline=9]{theories}{DifferentDataPoints}}
 	\only<2|handout:0>{\javainputlisting[firstline=9,emph={@DataPoints,NUMBERS}]{theories}{DifferentDataPoints}}
 	\only<3|handout:0>{\javainputlisting[firstline=9,emph={@DataPoint,A,B}]{theories}{DifferentDataPoints}}
@@ -240,34 +240,33 @@ assertThat(new TreeSet<String>(), Matchers.<String>empty());
 
 \begin{frame}{Parameterized Tests vs. Theories}
 	\begin{itemize}
-		\item Definition von \texttt{@DataPoints} ist flexibler
+		\item \texttt{@DataPoint} definition is more flexible
 			\begin{itemize}
-				\item Konstanten oder Methoden
-				\item Beliebig viele
-				\item Verschiedene Typen
+				\item Constants oder methods
+				\item Any number of datapoints
+				\item Different types
 			\end{itemize}
-		\item Parametrisierung der Test\emph{methoden}
+		\item Test \emph{methods} are parameterized
 			\begin{itemize}
-				\item Kein Boilerplate-Code (Konstruktor + Instanzvariablen)
-				\item Verschiedene Parametertypen möglich
+				\item No boilerplate code (Constructor + instance variables)
+				\item Different types of parameters possible
 			\end{itemize}
-		\item \texttt{Theories} können alles, was \texttt{Parameterized} auch kann, aber mehr!
+		\item \texttt{Theories} can do everything \texttt{Parameterized} tests can, but more!
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Herkömmliche Tests vs. Theories}
+\begin{frame}{Traditional Tests vs. Theories}
 	\begin{itemize}
-		\item Herkömmliche Tests benutzen Beispiele:
+		\item Traditional tests use examples:
 			\begin{itemize}
-				\item Überprüfung des Verhaltens unter ausgewählten Eingaben
-				\item Beispiele sind (hoffentlich) charakteristisch
+				\item Validation of behaviour under selected inputs
+				\item Examples ought to be characteristic (hopefully)
 			\end{itemize}
-		\item Eine Theory verallgemeinert eine Menge von Tests:
+		\item A theory generalizes a set of tests:
 			\begin{itemize}
-				\item Vorbedingung wird explizit angegeben
-				\item Sollte für alle Eingaben gelten, die Vorbedingungen erfüllen
+				\item precondition is made explicit
+				\item assertions apply for all inputs that satisfy preconditions
 			\end{itemize}
-		\item Eingabewerte können explizit angegeben werden oder automatisch erzeugt werden
 	\end{itemize}
 \end{frame}
 
