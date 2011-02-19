@@ -22,7 +22,7 @@ public class TemporaryFolderWithoutRule {
 	}
 	
 	@After public void deleteTemporaryFolder() {
-		recursivelyDelete(folder); // passt nicht mehr auf die Folie...
+		recursivelyDelete(folder); // does not fit on current slide...
 	}
 
 	private void recursivelyDelete(File file) {

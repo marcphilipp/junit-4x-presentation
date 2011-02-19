@@ -10,9 +10,9 @@ public class CollectionMatchersTest {
 
 	@Test public void isEmpty() {
 		TreeSet<String> set = new TreeSet<String>();
-		assertThat(set, new IsEmptyCollection());   // direkter Aufruf
-		assertThat(set, IsEmptyCollection.empty()); // über @Factory-Methode
-		assertThat(set, empty());                   // mit statischem Import
+		assertThat(set, new IsEmptyCollection());   // direct instantiation
+		assertThat(set, IsEmptyCollection.empty()); // using @Factory method
+		assertThat(set, empty());                   // using static import
 		assertThat(set, is(empty()));               // syntactic sugar
 	}
 }
