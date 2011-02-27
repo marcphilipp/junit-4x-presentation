@@ -1,12 +1,18 @@
 \begin{frame}{About JUnit}
 	\begin{columns}[c]
 		\begin{column}{5cm}\centering
+			\def\firstcircle{(0:1cm) circle (15mm)}
+			\def\secondcircle{(-120:1cm) circle (15mm)}
+			\def\thirdcircle{(120:1cm) circle (15mm)}
 			\begin{tikzpicture}
-				\begin{scope}[fill opacity=.5]
-					\filldraw[fill=red]   (0:1cm) circle (15mm);
-					\filldraw[fill=green] (-120:1cm) circle (15mm);
-					\filldraw[fill=blue]  (120:1cm) circle (15mm);
-				\end{scope}
+			    \begin{scope}[fill opacity=0.5]
+				\fill[red] \firstcircle;
+				\fill[green] \secondcircle;
+				\fill[blue] \thirdcircle;
+				\draw \firstcircle;
+				\draw \secondcircle;
+				\draw \thirdcircle;
+			    \end{scope}
 			\end{tikzpicture}
 		\end{column}
 		\begin{column}{5cm}
