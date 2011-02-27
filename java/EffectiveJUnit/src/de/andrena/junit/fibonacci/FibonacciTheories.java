@@ -18,7 +18,7 @@ public class FibonacciTheories {
 		assertEquals(n, compute(n));
 	}
 
-	@Theory public void recurrence(int n) {  // $F(n) = F(n-1) + F(n-2)$ für $n>1$
+	@Theory public void recurrence(int n) {  // $F(n) = F(n-1) + F(n-2)$ for $n>1$
 		assumeTrue(n > 1);
 		assertEquals(compute(n - 1) + compute(n - 2), compute(n));
 	}
